@@ -3,7 +3,7 @@
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "build",
-    "esModuleInterop" : true,
+    "esModuleInterop": true
   },
   "include": ["src/**/*.ts", "test/**/*.ts", "src/app.ts", "src/router.ts"]
 }

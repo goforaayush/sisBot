@@ -10,12 +10,10 @@ export async function redisInit() {
   });
 
   await client.connect();
-  // client.zIncrBy("b26", 1, "Aayushmaan");
 }
 
-export  function useClient() {
-  return  client;
-  
+export function useClient() {
+  return client; //use this function to use client in other files
 }
 
 export async function redisClose() {

@@ -36,3 +36,14 @@ export async function tellScore(username:string, key:string) {
     return scores
     
 }
+
+export async function batchScore(key: string){
+    let members =  await client.ZRANGE_WITHSCORES(key,0,await client.zCard(key))
+    let say =""
+    for (let data of members.reverse()) {
+        say=say + (data.value+" : "+data.score+"\n")
+    }
+    
+    return say
+
+}

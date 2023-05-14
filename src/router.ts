@@ -2,7 +2,7 @@
 
 import { getApp } from "./app";
 import { getRole, updateRole } from "./scripts/roles";
-import { minusminus, plusplus, tellScore } from "./scripts/score";
+import { batchScore, minusminus, plusplus, tellScore } from "./scripts/score";
 import {  getSetKey } from "./utils/getKey";
 
 let app = getApp();
@@ -57,5 +57,17 @@ else{
 }
 });
 
+app.message('id', async ({message, say}) => {
+    const text= JSON.parse(JSON.stringify(message)).text;
+    console.log(text)
+    await say(text);
+});
+
+app.message('bhai score', async ({message, say}) => {
+    const text= JSON.parse(JSON.stringify(message)).text;
+    let key = text.slice(11)
+
+    await say(await batchScore(key));
+});
 
 export var bruh = 50;

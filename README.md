@@ -44,15 +44,19 @@ Now you can run the app using the start script
 npm run start
 ```
 
-## Components
+## Commands
 
-`src` folder is the source folder where all the magic happens
-
-- `app.ts` driver file of the project
-- `router.ts` message to function/script mapping
-- `services` all service related functions are kept here
-- `scripts` functions to decide the response and tasks
-- `utils` utility functions such as validators etc
+So, I've added many Commands taking reference from the Bro bot developed by MDGSpace, IITR
+<br>Use the following commands to interact:
+<br>`ping`: Output-`pong`
+<br>`name++` : increases score of name by 1
+<br>`name--` : decreases score of name by 1
+<br>`bhai bta name` : displayed score of name
+<br>`bhai score bxx` : displays score of all the members of the batch bxx
+<br>`name is role` : name is assigned the role
+<br>`who is name` : roles of name are displayed
+<br>`Is name role` : checksif the role is assigned to name
+<br>`name is not role` : removes the role assigned to the name
 
 ## 💬 For commit messages
 

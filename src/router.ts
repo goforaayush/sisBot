@@ -9,23 +9,33 @@ app.message('ping', async ({message, say}) => {
   console.log(message);
   await say('pong');
 });
-app.message('--', async ({message, say}) => {
+//to perform ++ and -- in the same command
+app.message(/\++\+||\-+\-/g, async ({message, say}) => {
   //score.ts
-  const text: string = JSON.parse(JSON.stringify(message)).text;
-  let index: number = text.indexOf('-');
-  let username: string = text.slice(0, index);
-  let toSay: string = await minusminus(username);
-  await say(toSay!);
+  let text: string = JSON.parse(JSON.stringify(message)).text;
+  while(text.includes("--")||text.includes("++")){
+    console.log(text)
+    if((text.indexOf("--")<text.indexOf("++")&&text.includes("++")&&text.includes("--"))||(text.includes("--")&&!text.includes("++")))
+    {
+        let index: number = text.indexOf('-');
+        let username: string = text.slice(0, index);
+        let toSay: string = await minusminus(username);
+        text=text.replace(username+"--","")
+        await say(toSay!);
+    }
+    else if((text.indexOf("++")<text.indexOf("--")&&text.includes("--")&&text.includes("++"))||(text.includes("++")&&!text.includes("--")))
+    {
+        let index: number = text.indexOf('+');
+        let username: string = text.slice(0, index);
+        let toSay: string = await plusplus(username);
+        text=text.replace(username+"++","")
+        
+        await say(toSay!);
+    }
+}
 });
 
-app.message('++', async ({message, say}) => {
-  //score.ts
-  const text: string = JSON.parse(JSON.stringify(message)).text;
-  let index: number = text.indexOf('+');
-  let username: string = text.slice(0, index);
-  let toSay: string = await plusplus(username);
-  await say(toSay!);
-});
+
 
 app.message('bhai bta', async ({message, say}) => {
   //roles.ts
@@ -85,5 +95,11 @@ app.message('Is ', async ({message, say}) => {
   await say(await checkRole(username, role));
 });
 
+
+app.message('bhai madad', async ({say}) => {
+    
+   
+    await say("Use the following commands to interact:\n`ping`: Output-`pong`\n`name++`: increases score of name by 1\n`name--` : decreases score of name by 1\n`bhai bta name` : displayed score of name\n`bhai score bxx` : displays score of all the members of the batch bxx\n`name is role` : name is assigned the role\n`who is name` : roles of name are displayed\n`Is name role` : checksif the role is assigned to name\n`name is not role` : removes the role assigned to the name");
+  });
 
 

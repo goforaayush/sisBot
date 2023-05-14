@@ -1,5 +1,5 @@
 import {getApp} from './app';
-import {checkRole, getRole, updateRole} from './scripts/roles';
+import {checkRole, deleteRole, getRole, updateRole} from './scripts/roles';
 import {batchScore, minusminus, plusplus, tellScore} from './scripts/score';
 import {getSetKey} from './utils/getKey';
 
@@ -44,18 +44,28 @@ app.message('bhai bta', async ({message, say}) => {
 
 app.message(' is ', async ({message, say}) => {
   //roles.ts
+  let toSay:string;
   const text: string = JSON.parse(JSON.stringify(message)).text;
-  if (text.slice(0, 3) == 'who') {
-    let username: string = text.slice(7);
-    let toSay: string = await getRole(username);
-    await say(toSay);
-  } else {
+  let msg: string[] = text.split(' ');
+  if (msg[0] == 'who') {
+    let username: string = msg[2];
+    toSay = await getRole(username);
+    
+  } 
+  else if(msg[2]=="not"){
+
+    let username:string = msg[0];
+    let role:string =text.slice(username.length+8)
+    toSay= await deleteRole(username,role)
+  }
+  else {
     let index: number = text.indexOf(' ');
     let username: string = text.slice(0, index);
     let role: string = text.slice(index + 4);
-    let toSay: string = await updateRole(username, role);
-    await say(toSay);
+     toSay = await updateRole(username, role);
+    
   }
+  await say(toSay);
 });
 
 app.message('bhai score', async ({message, say}) => {
@@ -74,3 +84,6 @@ app.message('Is ', async ({message, say}) => {
   let role: string = text.slice(username.length + 4);
   await say(await checkRole(username, role));
 });
+
+
+

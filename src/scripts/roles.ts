@@ -27,7 +27,7 @@ export async function updateRole(
 export async function getRole(username: string): Promise<string> {
   let key: string | null = await getHashKey(username); //fetch key from utils
 
-  if (key != null) {
+  if (key != null||key==".") {
     let roles: string | undefined = await client.hGet(key, username);
     if (roles == '') return 'Aap btao kon hai ' + username + '.'; //ErrorHandling
     return username + ' is ' + roles + '.';
@@ -49,4 +49,22 @@ export async function checkRole(
   } else {
     return username + ' kon hai????'; //ErrorHandling
   }
+}
+export async function deleteRole(username:string, role:string){
+    let key: string | null = await getHashKey(username); //fetch key from utils
+    if (key != null) {
+        let roles: string | undefined = await client.hGet(key, username);
+        if(roles!.includes(role)){
+            roles=roles?.replace(role+" , ","")
+            roles=roles?.replace(role,"")
+            await client.hSet(key, username, roles!);
+            return "Okay!"
+        }
+        else{
+            return username + " is already not "+role+"."; 
+        }
+      } else {
+        return username + ' kon hai????'; //ErrorHandling
+      }
+     
 }

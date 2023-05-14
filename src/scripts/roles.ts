@@ -5,7 +5,10 @@ import {getHashKey} from '../utils/getKey';
 
 let client = useClient();
 
-export async function updateRole(username: string, role: string) {
+export async function updateRole(
+  username: string,
+  role: string
+): Promise<string> {
   let key: string | null = await getHashKey(username);
   if (key != null) {
     let roles: string | undefined = await client.hGet(key, username);
@@ -21,11 +24,11 @@ export async function updateRole(username: string, role: string) {
   }
 }
 
-export async function getRole(username: string) {
-  let key : string | null= await getHashKey(username); //fetch key from utils
+export async function getRole(username: string): Promise<string> {
+  let key: string | null = await getHashKey(username); //fetch key from utils
 
   if (key != null) {
-    let roles : string | undefined= await client.hGet(key, username);
+    let roles: string | undefined = await client.hGet(key, username);
     if (roles == '') return 'Aap btao kon hai ' + username + '.'; //ErrorHandling
     return username + ' is ' + roles + '.';
   } else {
@@ -33,13 +36,16 @@ export async function getRole(username: string) {
   }
 }
 
-export async function checkRole(username: string, role: string){
-    let key : string | null= await getHashKey(username); //fetch key from utils
+export async function checkRole(
+  username: string,
+  role: string
+): Promise<string> {
+  let key: string | null = await getHashKey(username); //fetch key from utils
 
   if (key != null) {
-    let roles :string | undefined = await client.hGet(key, username);
-    if (roles!.includes(role)) return "Yes! "+username + ' is '+ role+"."; //checks and responds
-    return "No! "+username + ' is not '+ role+"."; 
+    let roles: string | undefined = await client.hGet(key, username);
+    if (roles!.includes(role)) return 'Yes! ' + username + ' is ' + role + '.'; //checks and responds
+    return 'No! ' + username + ' is not ' + role + '.';
   } else {
     return username + ' kon hai????'; //ErrorHandling
   }

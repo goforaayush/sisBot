@@ -47,7 +47,7 @@ npm run start
 ## Commands
 
 So, I've added many Commands taking reference from the Bro bot developed by MDGSpace, IITR
-<br>Use the following commands to interact:
+<br>Use the following commands to interact or use `bhai madad` to get the list of all commands:
 <br>`ping`: Output-`pong`
 <br>`name++` : increases score of name by 1
 <br>`name--` : decreases score of name by 1

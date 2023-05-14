@@ -3,6 +3,7 @@
 import { getApp } from "./app";
 import { getRole, updateRole } from "./scripts/roles";
 import { minusminus, plusplus, tellScore } from "./scripts/score";
+import {  getSetKey } from "./utils/getKey";
 
 let app = getApp();
 
@@ -30,12 +31,14 @@ app.message('bhai bta', async ({message, say}) => {
 const text= JSON.parse(JSON.stringify(message)).text;
 
 let username = text.slice(9);
-let score = await tellScore(username)
-if (username==null) {
+let key= getSetKey(username);
+
+if (key==null) {
     await say(username + "kon hai????")
     
 }else{
-await say(username+" : "+score)}
+    let score = await tellScore(username, key)
+    await say(username+" : "+score)}
 });
 
 app.message(' is ', async ({message, say}) => {

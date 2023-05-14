@@ -1,22 +1,23 @@
 import { useClient } from "../services/redis";
+import { getHashKey } from "../utils/getKey";
 
 let client =  useClient();
 
 export async function updateRole(username:string, role:string) {
-    let whetherUsernameExists= await client.hExists("b26-hash",username)
-    if(whetherUsernameExists)
+    let key = await getHashKey(username)
+    if(key!=null)
     {
-        let roles= await client.hGet("b26-hash",username)
-        if(roles ==null)
+        let roles= await client.hGet(key ,username)
+        if(roles =="")
         {
-            await client.hSet("b26-hash",username,role)
+            await client.hSet(key,username,role)
         }
         else
         {
-            await client.hSet("b26-hash",username,roles+" , "+role)
+            await client.hSet(key,username,roles+" , "+role)
         }
-        roles = await client.hGet("b26-hash",username)
-        return "Okay! " + username + " is " + roles
+        // roles = await client.hGet(key,username)
+        return "Okay! " + username + " is " + role+"."
     }
     else{
         return username + " kon hai????"
@@ -25,13 +26,13 @@ export async function updateRole(username:string, role:string) {
 
 
 export async function getRole(username: string) {
+    let key = await getHashKey(username)
     
-    let whetherUsernameExists= await client.hExists("b26-hash",username)
-    if(whetherUsernameExists)
+    if(key!=null)
     {
-        let roles= await client.hGet("b26-hash",username)
-        
-        return username + " is " + roles
+        let roles= await client.hGet(key,username)
+        if(roles=="") return "Aap btao kon hai "+username+"."
+        return username + " is " + roles+"."
     }
     else{
         return username + " kon hai????"

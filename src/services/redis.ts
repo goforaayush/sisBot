@@ -4,7 +4,7 @@ let client = createClient({
   url: process.env.REDIS_URL,
 });
 
-export async function redisInit() {
+export async function redisInit(): Promise<void> {
   client.on('error', err => {
     console.log('[REDIS]', err);
   });
@@ -16,7 +16,7 @@ export function useClient() {
   return client; //use this function to use client in other files
 }
 
-export async function redisClose() {
+export async function redisClose(): Promise<void> {
   await client.disconnect();
 }
 
@@ -27,7 +27,7 @@ function isReady(): boolean {
   } else return true;
 }
 
-export async function setValue(key: string, value: string) {
+export async function setValue(key: string, value: string): Promise<void> {
   if (!isReady()) {
     return;
   }

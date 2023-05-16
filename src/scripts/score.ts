@@ -43,7 +43,7 @@ export async function tellScore(
 
 export async function batchScore(key: string): Promise<string> {
   if (key != 'b25' && key != 'b26') return 'Not an active batch.'; //ErrorHandling
-  let members: batchScore = await client.ZRANGE_WITHSCORES(
+  let members: batchScore[] = await client.ZRANGE_WITHSCORES(
     key,
     0,
     await client.zCard(key)
